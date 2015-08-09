@@ -39,26 +39,13 @@ func init(){
   }
 }
 
-// func GetPostFromId(id int64) models.Post {
-//   post models.Post := nil
-//   rows, err := db.Query("SELECT name FROM post WHERE id = ?LIMIT 1", id)
-//   defer rows.Close()
-//   if err != nil {
-//     log.Fatal("query error: %v", err)
-//   }
-//
-//   for rows.Next() {
-//     var id int64
-//     var name string
-//     if err := rows.Scan(&id, &name); err != nil {
-//         log.Fatal("scan erro: %v", err)
-//     }
-//     post := &models.Post {id,name}
-//     fmt.Println(id, name)
-//   }
-//
-//   return post
-// }
+func GetPostById(id int64) models.Post {
+  post := models.Post{Id: 0}
+  engine.Get(&post)
+  fmt.Println(post)
+
+  return post
+}
 
 func GetAllPosts() [] models.Post {
   posts := [] models.Post{}
