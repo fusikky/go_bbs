@@ -15,7 +15,7 @@
 </head>
 <body>
   <h1>BBS</h1>
-  <a href="/post/create">Create Post</a>
+  <a href="/post/new">new Post</a>
   <form method="post" action="/post/create">
     <label>
      text
@@ -26,9 +26,10 @@
   <ul>
     {{ range .}}
     <li>
-      <a href="post/edit/{{.UserId}}">
-      <span>{{.UserId}}, </span>
-      <span>{{.Text}}</span>
+      <a href="/post/edit/{{.Id}}">
+        <span>{{.UserId}}, </span>
+        <span>{{.Text}}</span>
+        <span>x</span>
       </a>
     </li>
    {{ end }}

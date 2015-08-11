@@ -1,7 +1,7 @@
 package services
 
 import (
-//    "github.com/zenazn/goji/web"
+    "github.com/zenazn/goji/web"
 //    "github.com/wcl48/valval"
 //    "github.com/jinzhu/gorm"
 //    "database/sql"
@@ -15,7 +15,7 @@ import (
     "fmt"
     "time"
     "log"
-//    "strconv"
+    "strconv"
 )
 
 // var tpl *template.Template
@@ -40,7 +40,7 @@ func init(){
 }
 
 func GetPostById(id int64) models.Post {
-  post := models.Post{Id: 0}
+  post := models.Post{Id: id}
   engine.Get(&post)
   fmt.Println(post)
 
@@ -55,36 +55,13 @@ func GetAllPosts() [] models.Post {
   return posts
 }
 
-// func CreateUser(user models.User) {
-// }
-// 
-// func UserIndex(c web.C, w http.ResponseWriter, r *http.Request) {
-//   Users := [] models.User{}
-// 
-//   post := models.Post{2,1, "a", time.Now(), time.Now(), time.Now()}
-//   affected, err := engine.Insert(&post)
-//   fmt.Println(post)
-// 
-//   db.Find(&Users)
-//   tpl = template.Must(template.ParseFiles("view/user/index.html"))
-//   tpl.Execute(w, Users)
-// }
-//
-
-// func UserNew(c web.C, w http.ResponseWriter, r *http.Request) {
-//   tpl = template.Must(template.ParseFiles("view/user/new.html"))
-//   tpl.Execute(w, FormData{models.User{}, ""})
-// }
-
-
-func CreatePost(w http.ResponseWriter, r *http.Request) {
+func CreatePost(c web.C, w http.ResponseWriter, r *http.Request) {
   switch r.Method {
     case "POST":
       fmt.Println("Post")
     case "GET":
       fmt.Println("GET")
   }
-
   post := models.Post {Text: r.FormValue("Text"),CreatedAt: time.Now(),UpdatedAt: time.Now()}
 
   affected, err := engine.Insert(&post)
@@ -92,21 +69,36 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
   fmt.Println(err)
   fmt.Println(post)
 
-  http.Redirect(w, r, "/bbs", 301)
+  http.Redirect(w, r, "/post/bbs", 301)
 
-  // if err := models.UserValidate(User); err != nil {
-  //   var Mess string
-  //   errs := valval.Errors(err)
-  //   for _, errInfo := range errs {
-  //     Mess += fmt.Sprint(errInfo.Error)
-  //   }
-  //   tpl = template.Must(template.ParseFiles("view/user/new.html"))
-  //   tpl.Execute(w, FormData{User, Mess})
-  // } else {
-  //   db.Create(&User)
-  //   http.Redirect(w, r, "user/index", 301)
-  // }
+}
 
+func UpdatePost(c web.C, w http.ResponseWriter, r *http.Request) {
+
+  id, _:= strconv.ParseInt(c.URLParams["id"], 10, 64)
+  fmt.Println(id)
+  fmt.Println("desu")
+  post := models.Post {Id: id, Text: r.FormValue("Text"),CreatedAt: time.Now(),UpdatedAt: time.Now()}
+
+  affected, err := engine.Id(id).Update(&post)
+  fmt.Println(affected)
+  fmt.Println(err)
+  fmt.Println(post)
+
+  http.Redirect(w, r, "/post/bbs", 301)
+
+}
+
+func DeletePost(c web.C, w http.ResponseWriter, r *http.Request) {
+
+  id, _:= strconv.ParseInt(c.URLParams["id"], 10, 64)
+  post := models.Post {Id: id}
+  affected, err := engine.Insert(&post)
+  fmt.Println(affected)
+  fmt.Println(err)
+  fmt.Println(post)
+
+  http.Redirect(w, r, "/post/bbs", 301)
 }
 
 // 
