@@ -1,23 +1,28 @@
 package controllers
 
 import (
+	"../models"
+	"../services"
 	"github.com/zenazn/goji/web"
 	"html/template"
 	"net/http"
-	// "../models"
-	"../services"
 	// "time"
-	"fmt"
+	// "fmt"
 	"strconv"
 )
 
+type Bbs struct {
+	User  models.User
+	Posts []models.Post
+}
+
 func BbsView(c web.C, w http.ResponseWriter, r *http.Request) {
-	fmt.Println("test")
 	// posts := [] models.Post{{1, 1, "Hello GoBBS", time.Now(), time.Now(),time.Time{}}}
 	posts := services.GetAllPosts()
 	tpl := template.Must(template.ParseFiles("view/bbs.html"))
-	tpl.Execute(w, posts)
-	fmt.Println(posts)
+	user := services.GetUserFromSession(c, w, r)
+	tpl.Execute(w, Bbs{User: user, Posts: posts})
+	// fmt.Println(posts)
 }
 
 func NewPost(c web.C, w http.ResponseWriter, r *http.Request) {
@@ -30,5 +35,5 @@ func EditPost(c web.C, w http.ResponseWriter, r *http.Request) {
 	post := services.GetPostById(id)
 	tpl := template.Must(template.ParseFiles("view/edit.html"))
 	tpl.Execute(w, post)
-	fmt.Println(post)
+	// fmt.Println(post)
 }

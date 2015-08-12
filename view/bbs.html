@@ -15,7 +15,10 @@
 </head>
 <body>
   <h1>BBS</h1>
+
+  <a href="/">Home</a>
   <a href="/post/new">new Post</a>
+  <p>{{.User.Name}}さん</p>
   <form method="post" action="/post/create">
     <label>
      text
@@ -24,7 +27,7 @@
     <button type="submit">送信</button>
   </form>
   <ul>
-    {{ range .}}
+    {{ range .Posts}}
     <li>
       <a href="/post/edit/{{.Id}}">
         <span>{{.Id}}, </span>
