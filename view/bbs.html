@@ -27,10 +27,11 @@
     {{ range .}}
     <li>
       <a href="/post/edit/{{.Id}}">
-        <span>{{.UserId}}, </span>
+        <span>{{.Id}}, </span>
         <span>{{.Text}}</span>
-        <span>x</span>
       </a>
+      <a href="/post/delete/{{.Id}}">x</a>
+
     </li>
    {{ end }}
   </ul>
