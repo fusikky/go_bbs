@@ -1,14 +1,23 @@
 package models
 
 import (
-  "time"
+	"time"
 )
 
 type Post struct {
-  Id int64 `xorm:"pk autoincr 'id'"`
-  UserId int64 `xorm:"not null 'user_id'"`
-  Text string `xorm:"not null 'text'"`
-  CreatedAt time.Time `xorm:"'created_at'"`
-  UpdatedAt  time.Time `xorm:"'updated_at'"`
-  DeletedAt time.Time `xorm:"'deleted_at'"`
+	Id        int64     `xorm:"pk autoincr 'id'"`
+	UserId    int64     `xorm:"not null 'user_id'"`
+	Text      string    `xorm:"not null 'text'"`
+	CreatedAt time.Time `xorm:"'created_at'"`
+	UpdatedAt time.Time `xorm:"'updated_at'"`
+	DeletedAt time.Time `xorm:"'deleted_at'"`
+}
+
+type PostDto struct {
+	Id        int64
+	User      User
+	Text      string
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt time.Time
 }

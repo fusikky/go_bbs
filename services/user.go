@@ -64,6 +64,11 @@ func CreateUser(c web.C, w http.ResponseWriter, r *http.Request) {
 	fmt.Println(err)
 	fmt.Println(user)
 
+	session, _ := store.Get(r, "sessionUser")
+	session.Values["Name"] = user.Name
+	session.Values["Id"] = user.Id
+	session.Save(r, w)
+
 	http.Redirect(w, r, "/post/bbs", 301)
 
 }

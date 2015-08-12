@@ -10,30 +10,45 @@
     list-style: none;
     padding: 10px;
     margin: 10px;
+    position relative;
   }
+  .text {
+    padding: 20px;
+    display: block;
+  }
+  .remove {
+    position: absolute;
+    right: 50px;
+    font-size: 20px;
+ }
 </style>
 </head>
 <body>
+  <p><a href="/">Home</a></p>
   <h1>BBS</h1>
 
-  <a href="/">Home</a>
-  <a href="/post/new">new Post</a>
-  <p>{{.User.Name}}さん</p>
+  {{if eq .User.Id 0}} 
+  <p>ログインしていません</p>
+  <p><a href="/user/login">ログイン</a>&nbsp;<a href="/user/new">アカウントを作成</a></p>
+  {{else}}
+  <p>Login User: {{.User.Name}}</p>
   <form method="post" action="/post/create">
     <label>
      text
       <input type="text" name="Text" value=""/>
     </label>
-    <button type="submit">送信</button>
+    <button type="submit">submit</button>
   </form>
+  {{end}}
   <ul>
     {{ range .Posts}}
     <li>
-      <a href="/post/edit/{{.Id}}">
-        <span>{{.Id}}, </span>
-        <span>{{.Text}}</span>
-      </a>
-      <a href="/post/delete/{{.Id}}">x</a>
+     <div>
+      <span>id:{{.Id}}</span>
+      <span>userId:{{.UserId}}</span>
+      <a href="/post/delete/{{.Id}}" class="remove">x</a>
+     </div>
+     <a href="/post/edit/{{.Id}}" class="text">{{.Text}}</a>
 
     </li>
    {{ end }}

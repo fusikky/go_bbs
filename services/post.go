@@ -34,7 +34,6 @@ func GetPostById(id int64) models.Post {
 func GetAllPosts() []models.Post {
 	posts := []models.Post{}
 	engine.Find(&posts)
-
 	return posts
 }
 
