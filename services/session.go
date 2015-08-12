@@ -2,7 +2,7 @@ package services
 
 import (
 	"../models"
-	"fmt"
+	//"fmt"
 	"github.com/zenazn/goji/web"
 	"net/http"
 )
@@ -16,6 +16,7 @@ func Login(c web.C, w http.ResponseWriter, r *http.Request) {
 		session.Values["Id"] = user.Id
 		session.Save(r, w)
 	} else {
+		session.Values["Id"] = 0
 		session.Values["Name"] = "げすと"
 		session.Save(r, w)
 	}
@@ -25,10 +26,11 @@ func Login(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func GetUserFromSession(c web.C, w http.ResponseWriter, r *http.Request) models.User {
 	session, _ := store.Get(r, "sessionUser")
-
-	user := models.User{Id: session.Values["Id"].(int64), Name: session.Values["Name"].(string)}
-	fmt.Println(session.Values["Id"])
-	fmt.Println(session.Values["Name"])
-
+	var user models.User
+	if session.Values["Id"] == 0 {
+		user = models.User{Id: 0}
+	} else {
+		user = models.User{Id: session.Values["Id"].(int64), Name: session.Values["Name"].(string)}
+	}
 	return user
 }

@@ -19,6 +19,10 @@ type Bbs struct {
 func BbsView(c web.C, w http.ResponseWriter, r *http.Request) {
 	// posts := [] models.Post{{1, 1, "Hello GoBBS", time.Now(), time.Now(),time.Time{}}}
 	posts := services.GetAllPosts()
+	// for index, value := range posts {
+	// 	postDtos[index].Id = value.Id
+	// 	postDtos[index].Text = value.Text
+	// }
 	tpl := template.Must(template.ParseFiles("view/bbs.html"))
 	user := services.GetUserFromSession(c, w, r)
 	tpl.Execute(w, Bbs{User: user, Posts: posts})
