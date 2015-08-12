@@ -3,9 +3,11 @@
 <title>GoBBS</title>
 </head>
 <body>
-  <h1>Create</h1>
+  <a href="/">Home</a>
+
+  <h1>Edit Post</h1>
+  <span> postId: {{.Id}}</span>
   <form method="post" action="/post/update/{{.Id}}">
-    <input type="text" name="Id" value="{{.Id}}"/>
     <label>
      text
       <input type="text" name="Text" value="{{.Text}}"/>
