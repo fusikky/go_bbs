@@ -1,0 +1,24 @@
+
+test:
+    driver: mymysql
+    open: user=root dbname=gobbs sslmode=disable
+
+
+development:
+    driver: mymysql
+    # open: user=root dbname=gobbs sslmode=disable
+    open: gobbs/gobbsuser/gobbs
+
+production:
+    driver: mymysql
+    open: user=liam dbname=gobbs sslmode=verify-full
+
+# customimport:
+#     driver: customdriver
+#     open: customdriver open
+#     import: github.com/custom/driver
+#     dialect: mysql
+#
+environment_variable_config:
+    driver: mymysql #$DB_DRIVER
+    open: tcp:127.0.0.1:13306* # $DATABASE_URL
