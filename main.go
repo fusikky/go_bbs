@@ -1,58 +1,35 @@
 package main
 
 import (
-  _ "github.com/go-sql-driver/mysql"
-  "net/http"
-  "github.com/zenazn/goji"
-  "github.com/zenazn/goji/web"
-  "github.com/zenazn/goji/web/middleware"
-  // "html/template"
-  // "log"
-   "./controllers"
-   "./services"
-  // "fmt"
+	"./controllers"
+	"./services"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/zenazn/goji"
+	"github.com/zenazn/goji/web"
+	"github.com/zenazn/goji/web/middleware"
 )
-
-func loginCtrl(w http.ResponseWriter, r *http.Request) {
-
-}
 
 func main() {
 
-  post := web.New()
-  goji.Handle("/post/*", post)
-  index := web.New()
-  goji.Handle("/*", index)
+	index := web.New()
+	goji.Handle("/*", index)
 
-  post.Use(middleware.SubRouter)
-  index.Use(middleware.SubRouter)
+	index.Use(middleware.SubRouter)
 
-  index.Get("/", controllers.IndexCtrl)
+	index.Get("/", controllers.IndexCtrl)
 
-  post.Get("/bbs", controllers.BbsView)
+	index.Get("/post/bbs", controllers.BbsView)
+	index.Post("/post/create", services.CreatePost)
+	index.Get("/post/edit/:id", controllers.EditPost)
+	index.Get("/post/new", controllers.NewPost)
+	index.Post("/post/update/:id", services.UpdatePost)
+	index.Get("/post/delete/:id", services.DeletePost)
 
-  post.Post("/create", services.CreatePost)
-  post.Get("/edit/:id", controllers.EditPost)
-  post.Get("/new", controllers.NewPost)
-  post.Post("/update/:id", services.UpdatePost)
-  post.Get("/delete/:id", services.DeletePost)
+	index.Get("/user/new", controllers.NewUser)
+	index.Post("/user/create", services.CreateUser)
 
-  //http.HandleFunc("/", controllers.IndexCtrl)
-  // http.HandleFunc("/bbs", controllers.BbsView)
-  // http.HandleFunc("/login", loginCtrl)
+	index.Get("/user/login", controllers.Login)
+	index.Post("/user/login", services.Login)
 
-  //http.HandleFunc("/post/new", controllers.NewPost)
-  //http.HandleFunc("/post/edit/:id", controllers.EditPost)
-
-  // for Post
-  //http.HandleFunc("/post/create", services.CreatePost)
-
-  // http.HandleFunc("/post/delete/:id", controllers.DeletePost)
-
-  goji.Serve()
- //  err := http.ListenAndServe(":9090", nil)
- //  fmt.Println(":9090")
- //  if err != nil {
- //    log.Fatal("ListenAndServe:", err)
- //  }
+	goji.Serve()
 }

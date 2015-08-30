@@ -1,19 +1,11 @@
 package controllers
 
 import (
-  "net/http"
-  "html/template"
+	"html/template"
+	"net/http"
 )
 
-
-type Greet struct {
-  Text string
-}
-
 func IndexCtrl(w http.ResponseWriter, r *http.Request) {
-  greet := Greet{Text: "Hello"}
-  tpl := template.Must(template.ParseFiles("view/index.html"))
-  tpl.Execute(w, greet)
+	tpl := template.Must(template.ParseFiles("view/index.html"))
+	tpl.Execute(w, nil)
 }
-
-
