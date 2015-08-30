@@ -16,7 +16,6 @@ import (
 var store = sessions.NewCookieStore([]byte("something-very-secret"))
 
 func init() {
-	// db := sql.Open("mysql", "user:password@tpc(host:port)/dbname")
 	dbStr := "gobbsuser:gobbs@tcp(localhost:3306)/gobbs"
 	var err error
 	engine, err = xorm.NewEngine("mysql", dbStr)

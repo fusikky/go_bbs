@@ -2,7 +2,6 @@ package services
 
 import (
 	"../models"
-	//"fmt"
 	"github.com/zenazn/goji/web"
 	"net/http"
 )

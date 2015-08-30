@@ -4,9 +4,7 @@ import (
 	"github.com/zenazn/goji/web"
 	"html/template"
 	"net/http"
-	// "../models"
 	"../services"
-	// "time"
 	"fmt"
 	"strconv"
 )
@@ -22,5 +20,4 @@ func EditUser(c web.C, w http.ResponseWriter, r *http.Request) {
 	post := services.GetPostById(id)
 	tpl := template.Must(template.ParseFiles("view/user/edit.html"))
 	tpl.Execute(w, post)
-	//	fmt.Println(post)
 }
